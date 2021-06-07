@@ -26,14 +26,12 @@ class App extends Component{
     this.setState({collections:collections.data})
 
   }
-  purge = () =>{
+  purge = (event) =>{
+    event.preventDefault();
     this.setState({
       renderIndex:'home',
-      collections:[],
-      cards:[],
-      activeCard:'needCard',
-      active:''
-    })
+      activeCard:'needCard'
+    });
   }
 
   nextCard(card){

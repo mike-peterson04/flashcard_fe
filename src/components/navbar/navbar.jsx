@@ -6,7 +6,7 @@ function Navbar(props){
                 <div className="container-fluid">
                     <ul className="navbar-nav">
                         <li className="nav-item">
-                            <a className="nav-link active" aria-current="page" href="Home" onClick={props.reload}>Home</a>
+                            <a className="nav-link active" aria-current="page" href="Home" onClick={(e)=>props.reload(e)}>Home</a>
                         </li>
                         <li className="nav-item">
                             <a className="nav-link" href="Collections" tabindex="-1">Collection Management</a>
@@ -25,7 +25,7 @@ function Navbar(props){
             <div className="container-fluid">
                 <ul className="navbar-nav">
                     <li className="nav-item">
-                        <a className="nav-link active" aria-current="page" href="Home">Home</a>
+                        <a className="nav-link active" aria-current="page" href="Home" onClick={(e)=>props.reload(e)}>Home</a>
                     </li>
                     <li className="nav-item">
                         <a className="nav-link" href="Collections" tabindex="-1">Collection Management</a>
