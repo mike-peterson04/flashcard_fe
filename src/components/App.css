@@ -27,6 +27,11 @@
 .App-link {
   color: #61dafb;
 }
+.h-center{
+  margin: auto;
+  width: 50%;
+  padding: 10px;
+}
 
 .manual-center {
   margin-top:40%;

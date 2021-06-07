@@ -4,6 +4,7 @@ import Axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.css';
 import Navbar from './navbar/navbar.jsx';
 import Collector from './collector/collector.jsx';
+import CardViewer from './cardViewer/cardViewer.jsx';
 
 class App extends Component{
   constructor(props){
@@ -100,8 +101,17 @@ class App extends Component{
                 </span>
               </div>
               <div className="col-sm">
-                   {this.state.activeCard !== 'needCard' && <span>
-                    {this.state.renderIndex === 'card'&& <span className='manual-center'> {this.state.cards.indexOf(this.state.activeCard)+1} of {this.state.cards.length}</span>}
+                {this.state.activeCard !== 'needCard' &&
+                  <span>
+                    {this.state.renderIndex === 'card'&& 
+                      <div className='container-fluid col-sm'>
+                        <span className='manual-center'>
+                          <span>
+                            <CardViewer card={this.state.activeCard}/>
+                          </span>
+                          <div className='h-center'>{this.state.cards.indexOf(this.state.activeCard)+1} of {this.state.cards.length}</div>
+                          </span>
+                        </div>}
                     </span>} 
               </div>
               <div className="col-sm">
