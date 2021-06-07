@@ -14,6 +14,7 @@ class App extends Component{
       renderIndex:'home',
       collections:[],
       cards:[],
+      activeCard:'needCard',
       active:''
     }
   }
@@ -25,11 +26,39 @@ class App extends Component{
 
   }
 
+  nextCard(card){
+    if(card === 'needCard'){
+      this.setState(
+        {activeCard:this.state.cards[0]}
+      )
+    }
+    else if(card === 'previous'){
+      let index = this.state.cards.indexOf(this.state.activeCard)
+      if (index <= 0){
+        index = this.state.cards.length;
+      }
+      this.setState(
+        {activeCard:this.state.cards[index-1]}
+      )
+
+    }
+    else{
+      let index = this.state.cards.indexOf(card)+1;
+      if (index===this.state.cards.length){
+        index = 0;
+      }
+      this.setState(
+        {activeCard:this.state.cards[index]}
+      )
+    }
+  }
+
+
   async collectionSelection(e,collection){
     let cards = await Axios.get('http://127.0.0.1:8000/collection/'+collection.id+'/')
     cards=cards.data;
     this.setState({
-      renderIndex:'deck',
+      renderIndex:'card',
       cards:cards,
       active:collection.name
     })
@@ -44,11 +73,43 @@ class App extends Component{
     console.log("RENDERING");
     console.log(this.state.collections);
     console.log(this.state.cards)
-    this.state.renderIndex='home';
+    if(this.state.activeCard === 'needCard' && this.state.renderIndex === 'card'){
+      this.nextCard(this.state.activeCard)
+    }
+    console.log(this.state.activeCard)
     return (
       <div className="text-light bg-dark">
         <Navbar render={this.state.renderIndex}/>
-        <Collector collections={this.state.collections} active={this.state.active} select={this.collectionSelection}/>               
+        <div className="container-fluid col-md-8 vertical-center">
+            <div className="row">
+            <div className="col-sm">
+                <span>{this.state.renderIndex === 'card' && <button className='btn btn-dark manual-center' onClick={()=>{this.nextCard('previous')}}>Previous</button>}</span>
+            </div>
+            <div className="col-sm">
+            <Collector collections={this.state.collections} active={this.state.active} select={this.collectionSelection}/>
+            
+            </div>
+            <div className="col-sm">
+                <span>{this.state.renderIndex === 'card' && <button className='btn btn-dark manual-center' onClick={()=>{this.nextCard(this.state.activeCard)}}>Next</button>}</span>
+            </div>
+                
+            </div>
+            <div className='row'>
+              <div className="col-sm">
+                <span>
+                </span>
+              </div>
+              <div className="col-sm">
+                   {this.state.activeCard !== 'needCard' && <span>
+                    {this.state.renderIndex === 'card'&& <span className='manual-center'> {this.state.cards.indexOf(this.state.activeCard)+1} of {this.state.cards.length}</span>}
+                    </span>} 
+              </div>
+              <div className="col-sm">
+                <span>
+                </span>
+              </div>
+            </div>
+        </div>       
       </div>
     );
   }
