@@ -26,6 +26,15 @@ class App extends Component{
     this.setState({collections:collections.data})
 
   }
+  purge = () =>{
+    this.setState({
+      renderIndex:'home',
+      collections:[],
+      cards:[],
+      activeCard:'needCard',
+      active:''
+    })
+  }
 
   nextCard(card){
     if(card === 'needCard'){
@@ -66,6 +75,13 @@ class App extends Component{
     })
   }
 
+  randomCard(max){
+    let index = Math.floor(Math.random()*max)
+    this.setState(
+      {activeCard:this.state.cards[index]}
+    )
+  }
+
   componentDidMount(){
     this.getCollections();
   }
@@ -81,14 +97,19 @@ class App extends Component{
     console.log(this.state.activeCard)
     return (
       <div className="text-light bg-dark">
-        <Navbar render={this.state.renderIndex}/>
+        <Navbar render={this.state.renderIndex} reload={this.purge}/>
         <div className="container-fluid col-md-8 vertical-center">
             <div className="row">
             <div className="col-sm">
                 <span>{this.state.renderIndex === 'card' && <button className='btn btn-dark manual-center' onClick={()=>{this.nextCard('previous')}}>Previous</button>}</span>
             </div>
             <div className="col-sm">
-            <Collector collections={this.state.collections} active={this.state.active} select={this.collectionSelection}/>
+              {this.state.renderIndex !=='card'&& <Collector collections={this.state.collections} active={this.state.active} select={this.collectionSelection}/>}
+              {this.state.renderIndex === 'card'&&
+                <span>
+                  <CardViewer card={this.state.activeCard}/>
+                </span>}
+            
             
             </div>
             <div className="col-sm">
@@ -107,10 +128,7 @@ class App extends Component{
                     {this.state.renderIndex === 'card'&& 
                       <div className='container-fluid col-sm'>
                         <span className='manual-center'>
-                          <span>
-                            <CardViewer card={this.state.activeCard}/>
-                          </span>
-                          <div className='h-center'>{this.state.cards.indexOf(this.state.activeCard)+1} of {this.state.cards.length}</div>
+                          <div className='h-center'><button className='btn btn-dark' onClick={()=>this.randomCard(this.state.cards.length)}>{this.state.cards.indexOf(this.state.activeCard)+1} of {this.state.cards.length}</button></div>
                           </span>
                         </div>}
                     </span>} 

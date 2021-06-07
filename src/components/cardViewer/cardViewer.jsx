@@ -40,6 +40,13 @@ class CardViewer extends Component{
                             {this.state.renderIndex === 'def'&&<div className='btn btn-secondary'>{this.state.card.definition}</div>}
                         </td>
                     </tr>
+                    <tr>
+                        <td>
+                            <button className='btn btn-secondary'>Edit Card</button>
+                        </td>
+                        <td><button className='btn btn-secondary'>Create Card</button>
+                        </td>
+                    </tr>
                 </tbody>
             </table>
         )
