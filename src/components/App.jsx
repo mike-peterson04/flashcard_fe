@@ -61,7 +61,8 @@ class App extends Component{
     this.setState({
       renderIndex:'card',
       cards:cards,
-      active:collection.name
+      active:collection.name,
+      activeCard:'needCard'
     })
   }
 
