@@ -26,6 +26,27 @@ class App extends Component{
     this.setState({collections:collections.data})
 
   }
+
+  async cardMaker(event,card){
+    event.preventDefault();
+    let details =''
+    try{
+      
+      if (card.id==='new'){
+        details = await Axios.post('http://127.0.0.1:8000/collection/'+card.collection+'/',{
+          term:card.term,
+          definition:card.definition,
+          collection:card.collection
+        })
+
+      }
+
+
+    }
+    catch(e){
+      console.log(e, card, details)
+    }
+  }
   purge = (event) =>{
     event.preventDefault();
     this.setState({
@@ -68,7 +89,7 @@ class App extends Component{
     this.setState({
       renderIndex:'card',
       cards:cards,
-      active:collection.name,
+      active:collection,
       activeCard:'needCard'
     })
   }
