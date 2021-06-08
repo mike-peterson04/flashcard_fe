@@ -12,7 +12,12 @@ class CardViewer extends Component{
     }
 
     showDef(){
-        this.setState({renderIndex:'def'})
+        if(this.state.renderIndex==='card'){
+            this.setState({renderIndex:'def'})
+        }
+        else if(this.state.renderIndex==='def'){
+            this.setState({renderIndex:'card'})            
+        }
     }
 
     startEditor(event, card){

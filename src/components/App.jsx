@@ -114,14 +114,31 @@ class App extends Component{
 
 
   async collectionSelection(e,collection){
+    debugger;
     let cards = await Axios.get('http://127.0.0.1:8000/collection/'+collection.id+'/')
     cards=cards.data;
+    if(cards.length===0){
+      alert('The collection you selected is empty redirecting to card creator')
+      this.setState(
+        {
+          renderIndex:'card',
+          activeCard:{
+            id:'new',
+            term:'term',
+            definition:'definition',
+            collection:this.state.active          
+          },
+          active:collection
+        }
+      )
+    }
+    else{
     this.setState({ 
       renderIndex:'card',
       cards:cards,
       active:collection,
       activeCard:'needCard'
-    })
+    })}
   }
 
   collectionManagement = (event) =>{
