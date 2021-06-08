@@ -96,6 +96,18 @@ class App extends Component{
     }
   }
 
+  async newCollection(event,collection){
+    try{
+      let newColl = await Axios.post('http://127.0.0.1:8000',collection)
+      console.log(newColl)
+      this.purge(event)
+    }
+    catch(e){
+      console.log(e)
+    }
+
+  }
+
 
   async collectionSelection(e,collection){
     let cards = await Axios.get('http://127.0.0.1:8000/collection/'+collection.id+'/')
