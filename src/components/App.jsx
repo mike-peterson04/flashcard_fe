@@ -114,7 +114,6 @@ class App extends Component{
 
 
   async collectionSelection(e,collection){
-    debugger;
     let cards = await Axios.get('http://127.0.0.1:8000/collection/'+collection.id+'/')
     cards=cards.data;
     if(cards.length===0){
