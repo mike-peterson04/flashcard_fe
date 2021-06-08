@@ -7,7 +7,7 @@ function CollectionCreate(props){
             alert('Please name this collection')
         }
         else{    
-            collection = {
+            let collection = {
                 name:event.target.name.value
             }
         
@@ -20,7 +20,7 @@ function CollectionCreate(props){
     
     return(
         <form onSubmit={(e) => handleSubmit(e)}>
-            <label>Name:<input type='text' name='name' className="btn btn-dark" placeholder={props.card.term}/></label>
+            <label>Name:<input type='text' name='name' className="btn btn-dark" placeholder='Collection name'/></label>
             <input type='submit' value='submit' className='btn btn-secondary'/>
         </form>
     )

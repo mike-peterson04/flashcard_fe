@@ -5,12 +5,14 @@ import 'bootstrap/dist/css/bootstrap.css';
 import Navbar from './navbar/navbar.jsx';
 import Collector from './collector/collector.jsx';
 import CardViewer from './cardViewer/cardViewer.jsx';
+import CollectionCreate from './collectionManagement/collectionCreate.jsx'
 
 class App extends Component{
   constructor(props){
     super(props);
 
     this.collectionSelection = this.collectionSelection.bind(this)
+    this.newCollection = this.newCollection.bind(this)
     this.cardMaker = this.cardMaker.bind(this)
     this.delete = this.delete.bind(this)
     this.state = {
@@ -18,7 +20,8 @@ class App extends Component{
       collections:[],
       cards:[],
       activeCard:'needCard',
-      active:''
+      active:'',
+      checkCollections:false
     }
   }
 
@@ -100,6 +103,7 @@ class App extends Component{
     try{
       let newColl = await Axios.post('http://127.0.0.1:8000',collection)
       console.log(newColl)
+      await this.getCollections();
       this.purge(event)
     }
     catch(e){
@@ -156,6 +160,11 @@ class App extends Component{
     }
   }
 
+  collectionEditStart(event){
+    event.preventDefault();
+    this.setState({renderIndex:'newCollection'});
+  }
+
 
   render(){
     console.log("RENDERING");
@@ -171,12 +180,17 @@ class App extends Component{
         <div className="container-fluid col-md-8 vertical-center">
             <div className="row">
             <div className="col-sm">
-              {this.state.renderIndex === 'collection' && <button className='btn btn-dark vertical-center' onClick={()=>{}}>Create New Collection<br/></button>}
+              {this.state.renderIndex === 'collection' && <span><button className='btn btn-dark vertical-center' onClick={(e)=>{this.collectionEditStart(e)}}>Create New Collection</button><br/></span>}
               {this.state.renderIndex === 'collection' && <button className='btn btn-dark vertical-center' onClick={(e)=>{this.collectionCheck(e)}}>Create New Card</button>}            
                 <span>{this.state.renderIndex === 'card' && <button className='btn btn-dark manual-center' onClick={()=>{this.nextCard('previous')}}>Previous</button>}</span>
             </div>
             <div className="col-sm">
-              {this.state.renderIndex !=='card'&& <Collector collections={this.state.collections} active={this.state.active} select={this.collectionSelection}/>}
+              {this.state.renderIndex !=='card'&& 
+                <div>
+                {this.state.renderIndex !=='newCollection'&&<Collector collections={this.state.collections} active={this.state.active} select={this.collectionSelection}/>}
+                {this.state.renderIndex ==='newCollection'&&<CollectionCreate newCollection={this.newCollection}/>}
+                </div>
+                }
               {this.state.renderIndex === 'card'&&
                 <span>
                   <CardViewer card={this.state.activeCard} cardMaker={this.cardMaker} delete={this.delete}/>
