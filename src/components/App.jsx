@@ -116,6 +116,26 @@ class App extends Component{
     this.getCollections();
   }
 
+  collectionCheck(event){
+    event.preventDefault();
+    if(this.state.active===''){
+      alert('You must select a collection before you can create a card');
+    }
+    else{
+      this.setState(
+        {
+          renderIndex:'card',
+          activeCard:{
+            id:'new',
+            term:'term',
+            definition:'definition',
+            collection:this.state.active          
+          }
+        }
+      )
+    }
+  }
+
 
   render(){
     console.log("RENDERING");
@@ -133,7 +153,7 @@ class App extends Component{
             <div className="col-sm">
             <span>
               {this.state.renderIndex === 'collection' && <button className='btn btn-dark vertical-center' onClick={()=>{}}>Create New Collection</button>}<br/>
-              {this.state.renderIndex === 'collection' && <button className='btn btn-dark vertical-center' onClick={()=>{}}>Create New Card</button>}            
+              {this.state.renderIndex === 'collection' && <button className='btn btn-dark vertical-center' onClick={(e)=>{this.collectionCheck(e)}}>Create New Card</button>}            
             </span>
                 <span>{this.state.renderIndex === 'card' && <button className='btn btn-dark manual-center' onClick={()=>{this.nextCard('previous')}}>Previous</button>}</span>
             </div>

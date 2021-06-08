@@ -35,9 +35,13 @@ class CardViewer extends Component{
 
 
     render(){
+        if(this.state.card.id === 'new'){
+            return(<CardEditor card={this.state.card} cardMaker={this.props.cardMaker} collection={this.state.card.collection}/>)            
+        }
         if(this.state.renderIndex === 'edit'){
             return(<CardEditor card={this.state.card} cardMaker={this.props.cardMaker} collection={this.state.card.collection}/>)
         }
+        
         if(this.state.card !== this.props.card){
             this.setState({
                 card:this.props.card,
