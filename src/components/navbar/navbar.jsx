@@ -11,9 +11,6 @@ function Navbar(props){
                         <li className="nav-item">
                             <a className="nav-link" href="Collections" tabIndex="-1" onClick={(e)=>props.collectionManagement(e)}>Collection Management</a>
                         </li>
-                        <li className="nav-item">
-                            <a className="nav-link disabled" href="cards" tabIndex="-1" aria-disabled="true">Card Management</a>
-                        </li>
                     </ul>
                 </div>
             </nav>
@@ -30,9 +27,6 @@ function Navbar(props){
                     <li className="nav-item">
                         <a className="nav-link active" href="Collections" tabindex="-1" onClick={(e)=>props.collectionManagement(e)}>Collection Management</a>
                     </li>
-                    <li className="nav-item">
-                        <a className="nav-link" href="cards" tabindex="-1" aria-disabled="true">Card Management</a>
-                    </li>
                 </ul>
             </div>
         </nav>
@@ -48,9 +42,6 @@ function Navbar(props){
                 </li>
                 <li className="nav-item">
                     <a className="nav-link" href="Collections" tabindex="-1" onClick={(e)=>props.collectionManagement(e)}>Collection Management</a>
-                </li>
-                <li className="nav-item">
-                    <a className="nav-link" href="cards" tabindex="-1" aria-disabled="true">Card Management</a>
                 </li>
             </ul>
         </div>
