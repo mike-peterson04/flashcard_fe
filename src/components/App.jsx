@@ -27,7 +27,6 @@ class App extends Component{
 
   async getCollections(){
     let collections = await Axios.get('http://127.0.0.1:8000/')
-    console.log(collections)
     this.setState({collections:collections.data})
 
   }
@@ -102,7 +101,6 @@ class App extends Component{
   async newCollection(event,collection){
     try{
       let newColl = await Axios.post('http://127.0.0.1:8000',collection)
-      console.log(newColl)
       await this.getCollections();
       this.purge(event)
     }
@@ -183,13 +181,9 @@ class App extends Component{
 
 
   render(){
-    console.log("RENDERING");
-    console.log(this.state.collections);
-    console.log(this.state.cards)
     if(this.state.activeCard === 'needCard' && this.state.renderIndex === 'card'){
       this.nextCard(this.state.activeCard)
     }
-    console.log(this.state.activeCard)
     return (
       <div className="text-light bg-dark">
         <Navbar render={this.state.renderIndex} reload={this.purge} collectionManagement={this.collectionManagement}/>
