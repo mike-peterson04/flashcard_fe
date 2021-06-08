@@ -9,7 +9,7 @@ const Collector = (props) => {
     }
 
     function tableBuilder(collection){
-        if(collection==props.active){
+        if(collection===props.active){
             return(
                 <div>
                     <center><button className='btn btn-secondary' onClick={(e)=>props.select(e,collection)}>{collection.name}</button></center><br/>

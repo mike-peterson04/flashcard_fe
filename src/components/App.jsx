@@ -11,6 +11,7 @@ class App extends Component{
     super(props);
 
     this.collectionSelection = this.collectionSelection.bind(this)
+    this.cardMaker = this.cardMaker.bind(this)
     this.state = {
       renderIndex:'home',
       collections:[],
@@ -28,18 +29,24 @@ class App extends Component{
   }
 
   async cardMaker(event,card){
+    
     event.preventDefault();
     let details =''
     try{
       
       if (card.id==='new'){
-        details = await Axios.post('http://127.0.0.1:8000/collection/'+card.collection+'/',{
+        details = await Axios.post('http://127.0.0.1:8000/collection/'+this.state.active.id+'/',{
           term:card.term,
           definition:card.definition,
-          collection:card.collection
+          collection:this.state.active.id
         })
-
+        this.collectionSelection(event,this.state.active)
       }
+      else{
+        details = await Axios.put('http://127.0.0.1:8000/collection/'+this.state.active.id+'/card/'+card.id+'/',card)
+        this.collectionSelection(event,this.state.active)
+      }
+      this.purge(event)
 
 
     }
@@ -126,7 +133,7 @@ class App extends Component{
               {this.state.renderIndex !=='card'&& <Collector collections={this.state.collections} active={this.state.active} select={this.collectionSelection}/>}
               {this.state.renderIndex === 'card'&&
                 <span>
-                  <CardViewer card={this.state.activeCard}/>
+                  <CardViewer card={this.state.activeCard} cardMaker={this.cardMaker}/>
                 </span>}
             
             

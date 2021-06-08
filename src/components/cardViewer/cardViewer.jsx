@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import CardEditor from './cardEditor.jsx'
 
 
 class CardViewer extends Component{
@@ -14,10 +15,30 @@ class CardViewer extends Component{
         this.setState({renderIndex:'def'})
     }
 
+    startEditor(event, card){
+        event.preventDefault();
+        if(card==='new'){
+            this.setState(
+                {card:{
+                    id:'new',
+                    term:"term",
+                    definition:"definition",
+                    collection:this.state.card.collection
+                    },
+                renderIndex:'edit'
+                }
+            )
+        }
+        this.setState({renderIndex:'edit'})
+    }
+
 
 
     render(){
-        if(this.state.card != this.props.card){
+        if(this.state.renderIndex === 'edit'){
+            return(<CardEditor card={this.state.card} cardMaker={this.props.cardMaker} collection={this.state.card.collection}/>)
+        }
+        if(this.state.card !== this.props.card){
             this.setState({
                 card:this.props.card,
                 renderIndex:'card'
@@ -42,9 +63,9 @@ class CardViewer extends Component{
                     </tr>
                     <tr>
                         <td>
-                            <button className='btn btn-secondary'>Edit Card</button>
+                            <button className='btn btn-secondary' onClick={(e)=>{this.startEditor(e,this.state.card)}}>Edit Card</button>
                         </td>
-                        <td><button className='btn btn-secondary'>Create Card</button>
+                        <td><button className='btn btn-secondary' onClick={(e)=>{this.startEditor(e,'new')}}>Create Card</button>
                         </td>
                     </tr>
                 </tbody>
