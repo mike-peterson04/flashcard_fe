@@ -29,7 +29,7 @@ function CardEditor(props){
         <form onSubmit={(e) => handleSubmit(e,props.card)}>
             <h3>Card ID: {props.card.id}</h3>
             <label>Term:<input type='text' name='term' className="btn btn-dark" placeholder={props.card.term}/></label>
-            <label>Definition:<input type='text' name='definition' className="btn btn-dark" placeholder={props.card.definition}/></label>
+            <label>Definition:<input type='text' name='definition' className="btn btn-dark" placeholder={props.card.definition}/></label><br/>
             <input type='submit' value='submit' className='btn btn-secondary'/>
         </form>
     )

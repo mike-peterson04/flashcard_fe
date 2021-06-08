@@ -34,11 +34,9 @@ class CardViewer extends Component{
 
 
 
+
     render(){
-        if(this.state.card.id === 'new'){
-            return(<CardEditor card={this.state.card} cardMaker={this.props.cardMaker} collection={this.state.card.collection}/>)            
-        }
-        if(this.state.renderIndex === 'edit'){
+        if(this.state.renderIndex === 'edit'||this.state.card.id === 'new'){
             return(<CardEditor card={this.state.card} cardMaker={this.props.cardMaker} collection={this.state.card.collection}/>)
         }
         
@@ -70,6 +68,11 @@ class CardViewer extends Component{
                             <button className='btn btn-secondary' onClick={(e)=>{this.startEditor(e,this.state.card)}}>Edit Card</button>
                         </td>
                         <td><button className='btn btn-secondary' onClick={(e)=>{this.startEditor(e,'new')}}>Create Card</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colSpan='2'>
+                            <center><button className='btn btn-danger' onClick={(e)=>this.props.delete(e, this.state.card)}>Delete Card</button></center>
                         </td>
                     </tr>
                 </tbody>

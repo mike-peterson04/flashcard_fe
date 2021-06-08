@@ -12,6 +12,7 @@ class App extends Component{
 
     this.collectionSelection = this.collectionSelection.bind(this)
     this.cardMaker = this.cardMaker.bind(this)
+    this.delete = this.delete.bind(this)
     this.state = {
       renderIndex:'home',
       collections:[],
@@ -53,6 +54,13 @@ class App extends Component{
       console.log(e, card, details)
     }
   }
+
+  async delete(event,card){
+    let deleted = await Axios.delete('http://127.0.0.1:8000/collection/'+card.collection+'/card/'+card.id)
+    console.log(deleted)
+    this.purge(event)
+  }
+
   purge = (event) =>{
     event.preventDefault();
     this.setState({
@@ -151,17 +159,15 @@ class App extends Component{
         <div className="container-fluid col-md-8 vertical-center">
             <div className="row">
             <div className="col-sm">
-            <span>
-              {this.state.renderIndex === 'collection' && <button className='btn btn-dark vertical-center' onClick={()=>{}}>Create New Collection</button>}<br/>
+              {this.state.renderIndex === 'collection' && <button className='btn btn-dark vertical-center' onClick={()=>{}}>Create New Collection<br/></button>}
               {this.state.renderIndex === 'collection' && <button className='btn btn-dark vertical-center' onClick={(e)=>{this.collectionCheck(e)}}>Create New Card</button>}            
-            </span>
                 <span>{this.state.renderIndex === 'card' && <button className='btn btn-dark manual-center' onClick={()=>{this.nextCard('previous')}}>Previous</button>}</span>
             </div>
             <div className="col-sm">
               {this.state.renderIndex !=='card'&& <Collector collections={this.state.collections} active={this.state.active} select={this.collectionSelection}/>}
               {this.state.renderIndex === 'card'&&
                 <span>
-                  <CardViewer card={this.state.activeCard} cardMaker={this.cardMaker}/>
+                  <CardViewer card={this.state.activeCard} cardMaker={this.cardMaker} delete={this.delete}/>
                 </span>}
             
             
