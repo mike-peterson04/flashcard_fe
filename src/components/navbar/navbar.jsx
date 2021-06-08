@@ -9,26 +9,26 @@ function Navbar(props){
                             <a className="nav-link active" aria-current="page" href="Home" onClick={(e)=>props.reload(e)}>Home</a>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link" href="Collections" tabindex="-1">Collection Management</a>
+                            <a className="nav-link" href="Collections" tabIndex="-1" onClick={(e)=>props.collectionManagement(e)}>Collection Management</a>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link disabled" href="cards" tabindex="-1" aria-disabled="true">Card Management</a>
+                            <a className="nav-link disabled" href="cards" tabIndex="-1" aria-disabled="true">Card Management</a>
                         </li>
                     </ul>
                 </div>
             </nav>
         );
     }
-  else{
+  else if(props.render==='collection'){
     return(
         <nav className="navbar navbar-expand navbar-dark bg-dark">
             <div className="container-fluid">
                 <ul className="navbar-nav">
                     <li className="nav-item">
-                        <a className="nav-link active" aria-current="page" href="Home" onClick={(e)=>props.reload(e)}>Home</a>
+                        <a className="nav-link" aria-current="page" href="Home" onClick={(e)=>props.reload(e)}>Home</a>
                     </li>
                     <li className="nav-item">
-                        <a className="nav-link" href="Collections" tabindex="-1">Collection Management</a>
+                        <a className="nav-link active" href="Collections" tabindex="-1" onClick={(e)=>props.collectionManagement(e)}>Collection Management</a>
                     </li>
                     <li className="nav-item">
                         <a className="nav-link" href="cards" tabindex="-1" aria-disabled="true">Card Management</a>
@@ -39,6 +39,23 @@ function Navbar(props){
     );
 
   }
+  return(
+    <nav className="navbar navbar-expand navbar-dark bg-dark">
+        <div className="container-fluid">
+            <ul className="navbar-nav">
+                <li className="nav-item">
+                    <a className="nav-link" aria-current="page" href="Home" onClick={(e)=>props.reload(e)}>Home</a>
+                </li>
+                <li className="nav-item">
+                    <a className="nav-link" href="Collections" tabindex="-1" onClick={(e)=>props.collectionManagement(e)}>Collection Management</a>
+                </li>
+                <li className="nav-item">
+                    <a className="nav-link" href="cards" tabindex="-1" aria-disabled="true">Card Management</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+);
 }
 
 export default Navbar;

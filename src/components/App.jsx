@@ -40,12 +40,11 @@ class App extends Component{
           definition:card.definition,
           collection:this.state.active.id
         })
-        this.collectionSelection(event,this.state.active)
       }
       else{
         details = await Axios.put('http://127.0.0.1:8000/collection/'+this.state.active.id+'/card/'+card.id+'/',card)
-        this.collectionSelection(event,this.state.active)
       }
+      this.collectionSelection(event,this.state.active)
       this.purge(event)
 
 
@@ -93,12 +92,17 @@ class App extends Component{
   async collectionSelection(e,collection){
     let cards = await Axios.get('http://127.0.0.1:8000/collection/'+collection.id+'/')
     cards=cards.data;
-    this.setState({
+    this.setState({ 
       renderIndex:'card',
       cards:cards,
       active:collection,
       activeCard:'needCard'
     })
+  }
+
+  collectionManagement = (event) =>{
+    event.preventDefault();
+    this.setState({renderIndex:'collection'})
   }
 
   randomCard(max){
@@ -123,10 +127,14 @@ class App extends Component{
     console.log(this.state.activeCard)
     return (
       <div className="text-light bg-dark">
-        <Navbar render={this.state.renderIndex} reload={this.purge}/>
+        <Navbar render={this.state.renderIndex} reload={this.purge} collectionManagement={this.collectionManagement}/>
         <div className="container-fluid col-md-8 vertical-center">
             <div className="row">
             <div className="col-sm">
+            <span>
+              {this.state.renderIndex === 'collection' && <button className='btn btn-dark vertical-center' onClick={()=>{}}>Create New Collection</button>}<br/>
+              {this.state.renderIndex === 'collection' && <button className='btn btn-dark vertical-center' onClick={()=>{}}>Create New Card</button>}            
+            </span>
                 <span>{this.state.renderIndex === 'card' && <button className='btn btn-dark manual-center' onClick={()=>{this.nextCard('previous')}}>Previous</button>}</span>
             </div>
             <div className="col-sm">
